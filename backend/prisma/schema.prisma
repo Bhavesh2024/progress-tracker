@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  name      String
+  username  String
+  profilePhoto String @default("")
+  email     String   @unique
+  password  String   @default("###")
+  phone     String
+  code      Int      @default(0)
+  token     String   @default("") @unique
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id              String   @id @default(uuid())  
+  empCode         String   @unique               	
+  name            String
+  birthDate       DateTime?
+  joiningDate     DateTime?
+  email           String   @unique
+  phone           String
+  jobRole         String   @default("")
+  gender          String
+  role            String  @default("developer")
+  profilePhoto    String  @default("")
+  username        String   @unique
+  password        String
+  code            Int      @default(0)
+  token           String   @default("") 
+  tasks           Task[]   @relation("TaskMembers")
+  following       Task[]   @relation("TaskFollowers")
+  projects        Project[] @relation("ProjectMembers")
+  assignedTasks   Task[]   @relation("AssignedTasks") 
+  tracker Tracker[] @relation("TaskTracker")
+  createdAt       DateTime @default(now())  
+}
+
+
+model Tag {
+  id      Int      @id @default(autoincrement())
+  name    String
+  projects Project[] @relation("ProjectTags")
+  tasks   Task[]    @relation("TaskTags")
+}
+
+model Project {
+  id         Int       @id @default(autoincrement())
+  projectCode String   @unique 
+  name       String
+  client     String
+  tags       Tag[]     @relation("ProjectTags")
+  tasks      Task[]    @relation("ProjectTask")
+  startDate  DateTime 
+  deadline   DateTime? 
+  members    User[]    @relation("ProjectMembers")
+  status     Int
+  slug String? @unique 
+  createdAt  DateTime  @default(now())
+}
+
+model Task {
+  id          Int       @id @default(autoincrement())
+  title       String 
+  startTime   DateTime?
+  endTime     DateTime?
+  members     User[]    @relation("TaskMembers")
+  status      Int       @default(0)
+  tags        Tag[]     @relation("TaskTags")
+  priority    Int       @default(3)
+  projectId   Int     
+  project     Project   @relation("ProjectTask", fields: [projectId], references: [id],onDelete:Cascade) 
+  assignerId  String    
+  assigner    User      @relation("AssignedTasks", fields: [assignerId], references: [id],onDelete:Cascade)
+  assignee   User[]     @relation("TaskFollowers")
+  tracker Tracker[] @relation("FollowingTasks")
+  description String    @default("")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt 
+}
+
+model Tracker{
+  id Int @id @default(autoincrement())
+  startTime DateTime
+  stopTime DateTime?
+  userId String
+  user User @relation("TaskTracker",fields:[userId],references:[id],onDelete:Cascade)
+  tasks Task[] @relation("FollowingTasks")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}

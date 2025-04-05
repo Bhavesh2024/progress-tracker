@@ -1,0 +1,16 @@
+{
+	"KPYX0008": {
+		"empCode": "KPYX0008",
+		"name": "Sweta Mehta",
+		"birthDate": "8 Aug 2000",
+		"joiningDate": "20 May 2024",
+		"email": "sweta.bws@gmail.com",
+		"phone": "9087654321",
+		"jobRole": "React Developer",
+		"gender": "female",
+		"role": "developer",
+		"profilePhoto": "sweta.png",
+		"username": "sweta_0008",
+		"password": "Sweta@2000"
+	}
+}

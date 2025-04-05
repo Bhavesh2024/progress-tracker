@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Admin" ADD COLUMN     "code" INTEGER NOT NULL DEFAULT 0;
