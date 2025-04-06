@@ -22,6 +22,7 @@ const EditProfile = () => {
 		data: user,
 		mutate: UpdateProfileMutation,
 		isSuccess: updateSuccess,
+		isPending: updateLoading,
 		isError: updateError,
 	} = useMutation({
 		mutationFn: updateUserProfile,
@@ -291,6 +292,8 @@ const EditProfile = () => {
 				open={openMessage}
 				setOpen={setOpenMessage}>
 				<ResponseModal
+					isError={updateError}
+					isLoading={updateLoading}
 					open={openMessage}
 					message={message}
 					isSuccess={updateSuccess}

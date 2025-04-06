@@ -138,6 +138,24 @@ export const getUsersForProject = async () => {
 	}
 };
 
+export const getDashboardData = async () => {
+	try {
+		const response = await axiosInstance.get(`/dashboard`);
+		if (!response.data) {
+			throw new Error("Invalid response from server.");
+		}
+		return response.data;
+	} catch (err) {
+		if (err instanceof axios.AxiosError) {
+			console.log(err.response?.data.message);
+
+			throw new Error(err.response?.data.message);
+		}
+		if (err instanceof Error) {
+			throw new Error(err.message);
+		}
+	}
+};
 export const editUser = async (user: FormData) => {
 	try {
 		const response = await axiosInstance.put(`/edit`, user, {
@@ -218,6 +236,14 @@ export function useGetUserReport(id: string) {
 	return useQuery({
 		queryKey: ["getUserReport", id],
 		queryFn: () => getUserReport(id),
+		retry: false,
+	});
+}
+
+export function useGetDashboardData() {
+	return useQuery({
+		queryKey: ["useGetDashboardData"],
+		queryFn: () => getDashboardData(),
 		retry: false,
 	});
 }

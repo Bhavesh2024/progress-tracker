@@ -62,7 +62,9 @@ const UserTracker = () => {
 	const startTimer = () => {
 		setIsActive(true);
 		setIsPaused(false);
-		localStorage.setItem("startTime", Date.now().toString());
+		if (typeof window !== "undefined") {
+			localStorage.setItem("startTime", Date.now().toString());
+		}
 	};
 
 	// Stop the timer and reset to 0
@@ -70,8 +72,12 @@ const UserTracker = () => {
 		setIsActive(false);
 		setIsPaused(false);
 		setSeconds(0);
-		localStorage.removeItem("startTime");
-		localStorage.removeItem("elapsedTime");
+		if (typeof window !== "undefined") {
+			// const token = localStorage.getItem("token");
+			// // use token...
+			localStorage.removeItem("startTime");
+			localStorage.removeItem("elapsedTime");
+		}
 	};
 
 	const {

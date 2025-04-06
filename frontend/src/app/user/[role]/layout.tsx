@@ -12,8 +12,8 @@ import { logoutUser, useCheckLogin } from "@/services/authApi";
 import PageLoading from "@/components/loader/PageLoading";
 import NotFound from "@/components/error/NotFound";
 import { sidebarActivities } from "@/app/data/sidebar";
-import Sidebar from "../../../../layouts/Sidebar";
-import Navbar from "../../../../layouts/Navbar";
+import Sidebar from "@/layout/Sidebar";
+import Navbar from "@/layout/Navbar";
 import { useCurrentUserStore } from "@/hooks/useCurrentUserStore";
 
 // Google Fonts Setup (Geist Sans and Geist Mono)
@@ -68,16 +68,18 @@ export default function AuthLayout({
 	};
 	useEffect(() => {
 		if (isSuccess) {
-			updateCurrentUser(
-				typeof user.currentUser !== "undefined"
-					? user.currentUser
-					: null,
-			);
+			if (user) {
+				updateCurrentUser(
+					(user as any).currentUser
+						? (user as any).currentUser
+						: null,
+				);
+				// console.log(user.currentUser);
+			}
 			localStorage.setItem(
 				"lastUser",
 				`${role ? role : "developer"}`,
 			);
-			console.log(user.currentUser);
 			const accessRoutesList = sidebarActivities
 				.filter((activity: any) => activity.role.includes(role))
 				.map((access) => access.link);

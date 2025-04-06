@@ -1,0 +1,16 @@
+{
+	"devDependencies": {
+		"@types/electron": "^1.4.38",
+		"@types/node": "^22.14.0",
+		"electron": "^35.1.4",
+		"typescript": "^5.8.3"
+	},
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"export": "next export",
+		"start": "cd electron && electron .",
+		"electron": "tsc -p electron/tsconfig.json && electron electron/dist/main.js",
+		"package": "electron-builder"
+	}
+}

@@ -8,10 +8,14 @@ import PageLoading from "@/components/loader/PageLoading";
 export default function Home() {
 	const router = useRouter();
 	const { role } = useParams<{ role: string }>();
-	const lastUser =
-		typeof localStorage.getItem("lastUser") == "string"
-			? localStorage.getItem("lastUser")
-			: "developer";
+	let lastUser: any;
+	if (typeof window !== "undefined") {
+		lastUser =
+			typeof localStorage.getItem("lastUser") == "string"
+				? localStorage.getItem("lastUser")
+				: "developer";
+	}
+
 	const { data: user, isSuccess, isLoading } = useCheckLogin(`${lastUser}`);
 
 	useEffect(() => {

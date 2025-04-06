@@ -537,6 +537,30 @@ const getUserReport = async (req: Request, res: Response): Promise<any> => {
 	}
 };
 
+const getDashboardData = async (req: Request, res: Response): Promise<any> => {
+	try {
+		let data = {};
+		const totalUser = await prisma.user.count();
+		const totalProject = await prisma.project.count();
+		data = {
+			count: {
+				user: totalUser,
+				project: totalProject,
+			},
+		};
+		return res
+			.status(200)
+			.json({ message: "Data Getted Successfully", data });
+	} catch (err) {
+		if (err instanceof Error) {
+			console.error(err.message);
+			return res.status(500).json({
+				message: "Internal Server Error",
+				error: err.message,
+			});
+		}
+	}
+};
 module.exports = {
 	addUser,
 	editUser,
@@ -545,5 +569,6 @@ module.exports = {
 	deleteUser,
 	getUsersForProject,
 	updateUserProfile,
+	getDashboardData,
 	getUserReport,
 };

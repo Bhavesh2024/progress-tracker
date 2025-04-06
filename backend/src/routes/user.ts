@@ -13,6 +13,7 @@ const {
 	deleteUser,
 	getUsersForProject,
 	updateUserProfile,
+	getDashboardData,
 	getUserReport,
 } = require("../controllers/user");
 
@@ -62,4 +63,5 @@ router.post("/:id", getUser);
 router.delete("/delete/:id", deleteUser);
 router.put("/edit-profile", upload.single("image"), updateUserProfile);
 router.get("/report/:id", getUserReport);
+router.get("/dashboard", getDashboardData);
 module.exports = router;

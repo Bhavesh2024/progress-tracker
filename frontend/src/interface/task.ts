@@ -1,3 +1,5 @@
+import { Project } from "./project";
+
 export enum TaskStatus {
 	NotStarted = 0,
 	InProgress = 1,
@@ -50,7 +52,7 @@ export interface TaskDataFormat {
 	status: TaskStatus;
 	assigner: string;
 	assignee: any[];
-	project: any;
+	project: any | Project;
 	tags: string[];
 	description: string;
 }

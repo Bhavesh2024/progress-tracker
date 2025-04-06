@@ -1,14 +1,18 @@
 "use client";
-
-import AdminDashboard from "@/layout/dashboard/admin/Dashboard";
-import UserDashboard from "@/layout/dashboard/user/Dashboard";
 import { useParams } from "next/navigation";
+import Dashboard from "@/layout/Dashboard";
 import React from "react";
 
-const Dashboard = () => {
+const UserDashboard = () => {
 	const { role } = useParams();
 
-	return <>{role == "admin" ? <AdminDashboard /> : <UserDashboard />}</>;
+	return (
+		<>
+			<Dashboard
+				role={typeof role == "string" ? role : "developer"}
+			/>
+		</>
+	);
 };
 
-export default Dashboard;
+export default UserDashboard;

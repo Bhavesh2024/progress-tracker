@@ -504,6 +504,8 @@ const UserReport = () => {
 												project: any,
 											) => (
 												<ProjectCard
+													destination=''
+													data=''
 													title={
 														project.name
 													}

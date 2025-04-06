@@ -110,9 +110,6 @@ const TaskForm: React.FC<Props> = ({ title, open, setOpen, action, data }) => {
 	} = useMutation({
 		mutationFn: addTask,
 		onSuccess: (data: any) => {
-			// addNewTask(data);
-			// socket.on('connect')
-			// socket.on('connection',())
 			setMessage("Task Added Successfully");
 			addNewTask(data.task);
 			setOpenModal(true);
@@ -531,14 +528,16 @@ const TaskForm: React.FC<Props> = ({ title, open, setOpen, action, data }) => {
 								name='project'
 								options={projectOptions}
 								onBlur={formik.handleBlur}
-								onChange={(selectedOptions) =>
+								onChange={(
+									selectedOptions: any,
+								) =>
 									formik.setFieldValue(
 										"project",
 										selectedOptions?.value,
 									)
 								}
 								value={projectOptions.filter(
-									(option) =>
+									(option: any) =>
 										formik.values
 											.project ==
 										option.value,
@@ -546,7 +545,7 @@ const TaskForm: React.FC<Props> = ({ title, open, setOpen, action, data }) => {
 							/>
 							{formik.errors.project && (
 								<p className='text-red-400 text-xs px-2 mt-1'>
-									{formik.errors.project}
+									{/* {formik.errors.project} */}
 								</p>
 							)}
 						</>
